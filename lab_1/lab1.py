@@ -1,5 +1,5 @@
 import json
-import sys
+import argparse
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def encryption_or_decryption_by_substitution(encryption_key1_file, input_file, mode):
@@ -8,7 +8,7 @@ def encryption_or_decryption_by_substitution(encryption_key1_file, input_file, m
             templates = json.load(f)
     except FileNotFoundError:
         print(f"Error: File {encryption_key1_file} not found!")
-
+        return
     for section, commands in templates.items():
         step = int(('\n'.join(commands)))
     try:
@@ -66,13 +66,15 @@ def decryption_by_frequency_analysis(filename, replacements_file):
     print(decoded_text)
 
 if __name__ == "__main__":
-    encryption_key1_file = sys.argv[1]
-    input_file = sys.argv[2]
-    mode = sys.argv[3]
-    original_cod9_file = sys.argv[4]
-    replacements_file = sys.argv[5]
+    parser = argparse.ArgumentParser(description="Substitution encryption/decryption")
+    parser.add_argument("encryption_key1_file", help="Path to the encryption key file")
+    parser.add_argument("input_file", help="Path to the input file")
+    parser.add_argument("mode", choices=['encryption', 'decryption'], help="Mode of operation: encryption or decryption")
+    parser.add_argument("original_cod9_file", help="Path to the original cod9 file")
+    parser.add_argument("replacements_file", help="Path to the replacements file")
+    args = parser.parse_args()
 
-    encryption_or_decryption_by_substitution(encryption_key1_file, input_file, mode)
-    check_character_frequency(original_cod9_file)
-    decryption_by_frequency_analysis(original_cod9_file, replacements_file)
+    encryption_or_decryption_by_substitution(args.encryption_key1_file, args.input_file, args.mode)
+    check_character_frequency(args.original_cod9_file)
+    decryption_by_frequency_analysis(args.original_cod9_file, args.replacements_file)
     
