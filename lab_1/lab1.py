@@ -1,22 +1,22 @@
 import json
 import argparse
+
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ARR_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/;<=>?@[\]^_`"
 
 def encryption_or_decryption_by_substitution(encryption_key1_file, input_file, mode):
     try:
-        with open(encryption_key1_file) as f:
+        with open(encryption_key1_file, "r", encoding="utf-8") as f:
             templates = json.load(f)
-    except FileNotFoundError:
-        print(f"Error: File {encryption_key1_file} not found!")
-        return
+    except Exception as e:
+         print(f"Error with {encryption_key1_file} file: {str(e)}")
     for section, commands in templates.items():
         step = int(('\n'.join(commands)))
     try:
-        with open(input_file) as file:
+        with open(input_file, "r", encoding="utf-8") as file:
             data = file.read().upper()
-    except FileNotFoundError:
-        print(f"Error: {input_file} File not found!")
-        return
+    except Exception as e:
+         print(f"Error with {input_file} file: {str(e)}")
     output = ""
     for i in data:
         place = ALPHABET.find(i)
@@ -34,14 +34,12 @@ def encryption_or_decryption_by_substitution(encryption_key1_file, input_file, m
 
 def check_character_frequency(original_cod9_file):
     try:
-        with open(original_cod9_file) as file:
+        with open(original_cod9_file, "r", encoding="utf-8") as file:
             original = file.read().upper()
-    except FileNotFoundError:
-        print(f"Error: File {original_cod9_file} not found!")
-        return
+    except Exception as e:
+         print(f"Error with {original_cod9_file} file: {str(e)}")
     count = len(original)
-    arr_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/;<=>?@[\]^_`"
-    for i in arr_letters:
+    for i in ARR_LETTERS:
         if i in original:
             count_symbol = original.count(i)
             print(f"{i}({count_symbol}) : {count_symbol / count}")
@@ -50,15 +48,13 @@ def decryption_by_frequency_analysis(filename, replacements_file):
     try:
         with open(replacements_file, "r", encoding="utf-8") as json_file:
             replacements = json.load(json_file)
-    except FileNotFoundError:
-        print(f"Error: File {replacements_file} not found!")
-        return
+    except Exception as e:
+         print(f"Error with {replacements_file} file: {str(e)}")
     try:
         with open(filename, "r", encoding="utf-8") as file:
             encoded_text = file.read().upper()
-    except FileNotFoundError:
-        print(f"Error: File {filename} not found!")
-        return
+    except Exception as e:
+         print(f"Error with {filename} file: {str(e)}")
     decoded_text = ""
     for char in encoded_text:
         decoded_char = replacements.get(char, char)
