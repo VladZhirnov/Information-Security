@@ -45,7 +45,6 @@ def sequence_of_units_test(bits_row):
     try:
         v1 = v2 = v3 = v4 = 0
         divided_bits = re.findall(r'.{%s}' % 8, bits_row)
-        print(divided_bits)
         for row in divided_bits:
             k = 0
             max_k = 0
@@ -68,7 +67,6 @@ def sequence_of_units_test(bits_row):
                 case _:
                     v4 += 1
         v = [v1, v2, v3, v4]
-        for i in v: print(i)
         x_square = 0
         for i in range(4):
             x_square += (pow(v[i] - 16 * pi[i], 2)) / (16 * pi[i])
