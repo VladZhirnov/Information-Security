@@ -8,7 +8,15 @@ import scipy
 pi = [0.2148, 0.3672, 0.2305, 0.1875]
 
 
-def frequency_bit_test(bits_row):
+def frequency_bit_test(bits_row : str) -> float:
+    """
+    Performs a bit frequency test
+
+    Parameters:
+    bits_row: str - sequence to be processed
+    
+    Return: float - Probability of a random sequence
+    """
     try:
         length = len(bits_row)
         s = 0
@@ -24,7 +32,15 @@ def frequency_bit_test(bits_row):
         print(f"Frequency bit test error: {str(e)}")
         
 
-def identical_bits_test(bits_row):
+def identical_bits_test(bits_row : str) -> float:
+    """
+    Performs a test for identical consecutive bits
+
+    Parameters:
+    bits_row: str - sequence to be processed
+    
+    Return: float - Probability of a random sequence
+    """
     try:
         length = len(bits_row)
         count_1 = bits_row.count('1')
@@ -42,7 +58,15 @@ def identical_bits_test(bits_row):
         print(f"Test error for identical consecutive bits: {str(e)}")
 
 
-def sequence_of_units_test(bits_row):
+def sequence_of_units_test(bits_row : str) -> float:
+    """
+    Performs a Test for the longest sequence of ones in a block
+
+    Parameters:
+    bits_row:str - sequence to be processed
+    
+    Return: float - Probability of a random sequence
+    """
     try:
         v1 = v2 = v3 = v4 = 0
         divided_bits = re.findall(r'.{%s}' % 8, bits_row)
