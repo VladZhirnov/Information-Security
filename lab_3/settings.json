@@ -1,0 +1,8 @@
+{
+    "initial_file":"D:/Information-Security(isb)/Information-Security/lab_3/texts_and_keys/original_text.txt",
+    "encrypted_file":"D:/Information-Security(isb)/Information-Security/lab_3/texts_and_keys/encrypted_text.txt",
+    "decrypted_file":"D:/Information-Security(isb)/Information-Security/lab_3/texts_and_keys/decrypted_text.txt",
+    "symmetric_key":"D:/Information-Security(isb)/Information-Security/lab_3/texts_and_keys/symmetric_key.txt",
+    "public_key":"D:/Information-Security(isb)/Information-Security/lab_3/texts_and_keys/public_key.pem",
+    "private_key":"D:/Information-Security(isb)/Information-Security/lab_3/texts_and_keys/private_key.pem"
+}
