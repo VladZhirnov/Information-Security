@@ -18,12 +18,19 @@ def encrypt_sym_key(symmetric, asymmetric, sym_key_path, pub_key_path, path_to_s
     c_sym_key = asymmetric.encrypt_key(symmetric.key)
     write_key_to_file(path_to_save, c_sym_key)
 
+def decrypt_sym_key(symmetric, asymmetric, enc_sym_key_path, priv_key_path, path_to_save):
+    asymmetric.deserialize_private_key(priv_key_path)
+    symmetric.deserialize_key(enc_sym_key_path)
+    dc_key = asymmetric.decrypt_key(symmetric.key)
+    write_key_to_file(path_to_save, dc_key)
+
 def menu():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument('-gen', '--generation', help = 'Starts key generation mode')
-    group.add_argument('-enc_key','--encryption_key', help='Starts encryption mode')
-    parser.add_argument("settings", type=str, help="Path to the json file with the settings")
+    group.add_argument('-enc_key', '--encryption_key', help = 'Starts encryption mode')
+    group.add_argument('-dec_key', '--decryption_key', help = 'Starts decryption mode')
+    parser.add_argument("settings", type=str, help = "Path to the json file with the settings")
     args = parser.parse_args()
     settings = read_json(args.settings)
     symmetric = Symmetric()
@@ -32,6 +39,8 @@ def menu():
         generate_keys(symmetric, asymmetric, settings["symmetric_key"], settings["public_key"], settings["private_key"])
     elif args.encryption_key is not None:
         encrypt_sym_key(symmetric, asymmetric, settings["symmetric_key"], settings["public_key"], settings["enc_sym_key"])
+    elif args.decryption_key is not None:
+        decrypt_sym_key(symmetric, asymmetric, settings["enc_sym_key"], settings["private_key"], settings["dec_sym_key"])
 
     
 if __name__ == "__main__":
