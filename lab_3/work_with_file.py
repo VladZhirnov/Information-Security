@@ -14,6 +14,10 @@ def read_file(path):
         data = file.read()
     return data
 
-def write_text_to_file(path, text):
+def write_enc_text_to_file(path, text):
     with open(path, "wb") as file:
+        file.write(text)
+
+def write_dec_text_to_file(path, text):
+    with open(path, "w") as file:
         file.write(text)

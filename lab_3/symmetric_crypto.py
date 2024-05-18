@@ -31,6 +31,15 @@ class Symmetric:
         padded_text = padder.update(text) + padder.finalize()
         return iv + encryptor.update(padded_text) + encryptor.finalize()
     
+    def decrypt_text(self, text):
+        iv = text[:16]
+        cipher_text = text[16:]
+        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
+        decrypt = cipher.decryptor()
+        unpacker_text = decrypt.update(cipher_text) + decrypt.finalize()
+        decrypt_text = unpacker_text.decode('UTF-8')
+        return decrypt_text
+    
         
     
     
