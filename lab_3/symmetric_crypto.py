@@ -1,29 +1,41 @@
 import os
 
 from cryptography.hazmat.primitives import padding
-from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives import serialization
 
 
 class Symmetric:
-    def __init__(self):
+    """
+    Class for implementing symmetric algorithms
+    """
+    def __init__(self) -> None:
         self.key = None
 
-    def generate_key(self):
+    def generate_key(self) -> bytes:
+        """
+        Generate a random key for symmetric encryption.
+        """
         self.key = os.urandom(16)
         return self.key
     
-    def serialize_key(self, key_path):
+    def serialize_key(self, key_path: str) -> None:
+        """
+        Serialize the symmetric key and save it to a file.
+        """
         with open(key_path, "wb") as key_file:
             key_file.write(self.key)
 
-    def deserialize_key(self, key_path):
+    def deserialize_key(self, key_path: str) -> None:
+        """
+        Deserialize the symmetric key from a file.
+        """
         with open(key_path, mode='rb') as key_file: 
             self.key = key_file.read()
 
-    def encrypt_text(self, text):
+    def encrypt_text(self, text: bytes) -> bytes:
+        """
+        Encrypt text using AES symmetric encryption in CBC mode.
+        """
         iv = os.urandom(16)
         cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
         encryptor = cipher.encryptor()
@@ -31,7 +43,10 @@ class Symmetric:
         padded_text = padder.update(text) + padder.finalize()
         return iv + encryptor.update(padded_text) + encryptor.finalize()
     
-    def decrypt_text(self, text):
+    def decrypt_text(self, text: bytes) -> str:
+        """
+        Decrypt text encrypted using AES symmetric encryption in CBC mode.
+        """
         iv = text[:16]
         cipher_text = text[16:]
         cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
