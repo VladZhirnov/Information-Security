@@ -27,6 +27,9 @@ class Asymmetric:
     def serialize_public_key(self, public_path: str) -> None:
         """
         Serialize the public key and save it to a file.
+
+        Args:
+            public_path (str): File path where the public key will be saved.
         """
         with open(public_path, 'wb') as public_out:
             public_out.write(self.public_key.public_bytes(encoding=serialization.Encoding.PEM,
@@ -35,6 +38,9 @@ class Asymmetric:
     def serialize_private_key(self, private_path: str) -> None:
         """
         Serialize the private key and save it to a file.
+
+        Args:
+            private_path (str): File path where the private key will be saved.
         """
         with open(private_path, 'wb') as private_out:
             private_out.write(self.private_key.private_bytes(encoding=serialization.Encoding.PEM,
@@ -44,6 +50,9 @@ class Asymmetric:
     def deserialize_public_key(self, public_path: str) -> None:
         """
         Deserialize the public key from a file.
+
+        Args:
+            public_path (str): File path from which the public key will be read.
         """
         with open(public_path, 'rb') as pem_in:
             public_bytes = pem_in.read()
@@ -52,6 +61,9 @@ class Asymmetric:
     def deserialize_private_key(self, private_path: str) -> None:
         """
         Deserialize the private key from a file.
+
+        Args:
+            private_path (str): File path from which the private key will be read.
         """
         with open(private_path, 'rb') as pem_in:
             private_bytes = pem_in.read()
@@ -60,6 +72,12 @@ class Asymmetric:
     def encrypt_key(self, key: bytes) -> bytes:
         """
         Encrypt a symmetric key using RSA encryption.
+
+        Args:
+            key (bytes): The symmetric key to be encrypted.
+
+        Returns:
+            bytes: The encrypted symmetric key.
         """
         c_key = self.public_key.encrypt(
             key,
@@ -74,6 +92,12 @@ class Asymmetric:
     def decrypt_key(self, key: bytes) -> bytes:
         """
         Decrypt an encrypted symmetric key using RSA decryption.
+
+        Args:
+            key (bytes): The encrypted symmetric key to be decrypted.
+
+        Returns:
+            bytes: The decrypted symmetric key.
         """
         dc_text = self.private_key.decrypt(
             key,
