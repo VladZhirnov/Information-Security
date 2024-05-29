@@ -4,6 +4,12 @@ import json
 def read_json(path: str) -> dict:
     """
     Read JSON data from a file.
+
+    Args:
+        path (str): The file path to the JSON file.
+
+    Returns:
+        dict: The JSON data parsed into a dictionary.
     """
     try:
         with open(path, "r") as json_file:
@@ -18,6 +24,10 @@ def read_json(path: str) -> dict:
 def write_key_to_file(path: str, key: bytes) -> None:
     """
     Write a key to a file.
+
+    Args:
+        path (str): The file path where the key will be written.
+        key (bytes): The key to be written to the file.
     """
     try:
         with open(path, "wb") as file:
@@ -31,6 +41,12 @@ def write_key_to_file(path: str, key: bytes) -> None:
 def read_file(path: str) -> bytes:
     """
     Read data from a file.
+
+    Args:
+        path (str): The file path to read data from.
+
+    Returns:
+        bytes: The data read from the file.
     """
     try:
         with open(path, "rb") as file:
@@ -45,6 +61,10 @@ def read_file(path: str) -> bytes:
 def write_text_to_file(path: str, text: str) -> None:
     """
     Write text to a file.
+
+    Args:
+        path (str): The file path where the text will be written.
+        text (str): The text to be written to the file.
     """
     try:
         if type(text) is bytes:
