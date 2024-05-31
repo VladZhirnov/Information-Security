@@ -51,12 +51,13 @@ class Symmetric:
         Returns:
             bytes: The IV followed by the encrypted ciphertext.
         """
-        iv = os.urandom(16)
-        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
+        iv = os.urandom(8)
+        cipher = Cipher(algorithms.IDEA(self.key), modes.CFB(iv))
         encryptor = cipher.encryptor()
-        padder = padding.PKCS7(128).padder()
-        padded_text = padder.update(text) + padder.finalize()
-        return iv + encryptor.update(padded_text) + encryptor.finalize()
+        adder = padding.ANSIX923(32).padder()
+        padded_text = adder.update(text) + adder.finalize()
+        cipher_text = iv + encryptor.update(padded_text) + encryptor.finalize()
+        return cipher_text
     
     def decrypt_text(self, text: bytes) -> str:
         """
@@ -68,9 +69,9 @@ class Symmetric:
         Returns:
             str: The decrypted plaintext.
         """
-        iv = text[:16]
-        cipher_text = text[16:]
-        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
+        iv = text[:8]
+        cipher_text = text[8:]
+        cipher = Cipher(algorithms.IDEA(self.key), modes.CFB(iv))
         decrypt = cipher.decryptor()
         unpacker_text = decrypt.update(cipher_text) + decrypt.finalize()
         decrypt_text = unpacker_text.decode('UTF-8')
