@@ -43,7 +43,7 @@ class Symmetric:
 
     def encrypt_text(self, text: bytes) -> bytes:
         """
-        Encrypt text using AES symmetric encryption in CBC mode.
+        Encrypt text using IDEA symmetric encryption in CFB mode.
 
         Args:
             text (bytes): The plaintext to be encrypted.
@@ -61,7 +61,7 @@ class Symmetric:
     
     def decrypt_text(self, text: bytes) -> str:
         """
-        Decrypt text encrypted using AES symmetric encryption in CBC mode.
+        Decrypt text using IDEA symmetric encryption in CFB mode.
 
         Args:
             text (bytes): The ciphertext to be decrypted.
